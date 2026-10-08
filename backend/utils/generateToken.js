@@ -10,8 +10,8 @@ const generateToken = (userId, res) => {
     res.cookie("jwt", token, {
         maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days in MS
         httpOnly: true, // Prevents XSS attacks
-        sameSite: "strict", // Prevents CSRF attacks
-        secure: process.env.NODE_ENV === "production"
+        sameSite: "none", // Must be "none" for cross-domain (Vercel -> Render)
+        secure: true // Must be true when sameSite is "none"
     });
 };
 
