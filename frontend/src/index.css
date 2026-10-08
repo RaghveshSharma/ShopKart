@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #235347;
+  --color-primary-dark: #193f35;
+  --color-secondary: #dca9a5;
+  --color-bg-light: #fdfbf7;
+  --color-glass-bg: rgba(253, 251, 247, 0.85);
+  --color-glass-border: rgba(220, 169, 165, 0.3);
+  --font-serif: "Playfair Display", "Merriweather", serif;
+  --font-sans: "Outfit", system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-light);
+  color: #3f4740;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Botanical Theme Utilities */
+@layer utilities {
+  .glass-panel {
+    background: var(--color-glass-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--color-glass-border);
+    box-shadow: 0 4px 20px -2px rgba(35, 83, 71, 0.08);
+  }
+  
+  .glass-card {
+    background: #ffffff;
+    border: 1px solid rgba(220, 169, 165, 0.15);
+    border-radius: 1rem;
+    box-shadow: 0 8px 24px -4px rgba(35, 83, 71, 0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px -4px rgba(35, 83, 71, 0.1);
+    border-color: rgba(220, 169, 165, 0.4);
+  }
+
+  .text-gradient {
+    color: var(--color-primary);
+    font-family: var(--font-serif);
+    font-style: italic;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-light);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(220, 169, 165, 0.6);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(35, 83, 71, 0.8);
+}
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(2deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes leaf-sway {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@layer utilities {
+  .animate-blob {
+    animation: float 8s ease-in-out infinite;
+  }
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+  .animate-leaf {
+    animation: leaf-sway 6s ease-in-out infinite;
+    transform-origin: bottom center;
+  }
+}
