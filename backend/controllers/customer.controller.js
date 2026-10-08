@@ -105,8 +105,13 @@ export const getMyProfile = async (req, res) => {
 // Task 4 — Logout
 export const logoutCustomer = async (req, res) => {
     try {
-        // Clear the cookie
-        res.cookie("jwt", "", { maxAge: 0 });
+        // Clear the cookie with identical options used when setting it
+        res.cookie("jwt", "", { 
+            maxAge: 0,
+            httpOnly: true,
+            sameSite: "none",
+            secure: true
+        });
         res.status(200).json({ success: true, message: "Logged out successfully" });
 
     } catch (error) {

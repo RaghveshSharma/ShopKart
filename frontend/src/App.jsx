@@ -10,7 +10,23 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Orders from "./pages/Orders";
 import OrderDetails from "./pages/OrderDetails";
-import { CartProvider } from "./context/CartContext";
+import { CartProvider, useCart } from "./context/CartContext";
+
+const ProtectedRoute = ({ children }) => {
+  const { isLoggedIn, loading } = useCart();
+  
+  if (loading) return null; // Or a loading spinner
+  
+  return isLoggedIn ? children : <Navigate to="/login" replace />;
+};
+
+const PublicRoute = ({ children }) => {
+  const { isLoggedIn, loading } = useCart();
+  
+  if (loading) return null;
+  
+  return !isLoggedIn ? children : <Navigate to="/home" replace />;
+};
 
 function App() {
   return (
@@ -25,16 +41,22 @@ function App() {
           <Navbar />
           <main className="flex-grow pt-28 px-4 sm:px-6 lg:px-8 relative z-10">
             <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/home" element={<Home />} />
+              {/* Public Routes - Only accessible when NOT logged in */}
+              <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+              <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+              
+              {/* Semi-Public Routes - Accessible to anyone */}
               <Route path="/products" element={<Products />} />
               <Route path="/products/:id" element={<ProductDetails />} />
-              <Route path="/wishlist" element={<Wishlist />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/orders" element={<Orders />} />
-              <Route path="/order-success/:id" element={<OrderDetails />} />
+              
+              {/* Protected Routes - Only accessible when logged in */}
+              <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+              <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+              <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+              <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+              <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+              <Route path="/order-success/:id" element={<ProtectedRoute><OrderDetails /></ProtectedRoute>} />
+              
               <Route path="/" element={<Navigate to="/login" replace />} />
             </Routes>
           </main>
