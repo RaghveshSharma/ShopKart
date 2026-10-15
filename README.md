@@ -245,8 +245,3 @@ cd ShopKart
 - GitHub: [@RaghveshSharma](https://github.com/RaghveshSharma)
 - Project: [ShopKart](https://github.com/RaghveshSharma/ShopKart)
 
----
-
-## 📄 License
-
-This project is licensed under the [ISC License](LICENSE).
